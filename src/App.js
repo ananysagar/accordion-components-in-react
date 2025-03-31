@@ -53,20 +53,21 @@ const faqs = [
 
 function App() {
   const [isActive, setIsActive] = useState(null);
+  const handleFaqClick = (id) => {
+    setIsActive(isActive === id ? null : id);
+  };
 
   return (
     <div className="app">
       <div className="accordion-app">
         <div className="faq-accordion">
           <h1>React.js FAQ: Everything You Need to Know</h1>
-          {faqs.map((element, index) => {
+          {faqs.map((element) => {
             return (
               <div className="faq" key={element.id}>
                 <div
                   className="faq-question"
-                  onClick={() =>
-                    setIsActive(isActive === element.id ? null : element.id)
-                  }
+                  onClick={() => handleFaqClick(element.id)}
                 >
                   <span className="question">{element.question}</span>
                   <span className="arrow">
@@ -74,7 +75,13 @@ function App() {
                   </span>
                 </div>
                 {isActive === element.id && (
-                  <div className={`faq-answer ${isActive===element.id ? 'show' : ''}`}>{element.answer}</div>
+                  <div
+                    className={`faq-answer ${
+                      isActive === element.id ? "show" : ""
+                    }`}
+                  >
+                    {element.answer}
+                  </div>
                 )}
               </div>
             );
