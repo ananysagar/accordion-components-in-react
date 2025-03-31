@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 const faqs = [
   {
@@ -51,19 +52,30 @@ const faqs = [
 ];
 
 function App() {
+  const [isActive, setIsActive] = useState(null);
+
   return (
     <div className="app">
       <div className="accordion-app">
         <div className="faq-accordion">
           <h1>React.js FAQ: Everything You Need to Know</h1>
-          {faqs.map((element) => {
+          {faqs.map((element, index) => {
             return (
               <div className="faq" key={element.id}>
-                <div className="faq-question">
+                <div
+                  className="faq-question"
+                  onClick={() =>
+                    setIsActive(isActive === element.id ? null : element.id)
+                  }
+                >
                   <span className="question">{element.question}</span>
-                  <span className="arrow-down">&#8595;</span>
+                  <span className="arrow">
+                    {isActive === element.id ? "↑" : "↓"}
+                  </span>
                 </div>
-                <div className="faq-answer">{element.answer}</div>
+                {isActive === element.id && (
+                  <div className={`faq-answer ${isActive===element.id ? 'show' : ''}`}>{element.answer}</div>
+                )}
               </div>
             );
           })}
